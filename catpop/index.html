@@ -2,6 +2,8 @@
 <html>
 <head>
 <title>catpop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimun-scale=1"> 
+	
 <style>
 	figure {
 		text-align:center;
@@ -12,16 +14,17 @@
 		font-size: 5rem;
 	}
 </style>
+	
 </head>
 <body>
 <h3>0</h3>
 <figure>
 	<img src="images/cat.png"/>
 </figure>
-
+	
 <script>
 let catImg = document.querySelector('figure > img');
-var h3 = document.querySelector('h3');
+let h3 = document.querySelector('h3');
 let count = h3.innerText;
 
 document.addEventListener('mousedown', ()=>{
@@ -33,7 +36,16 @@ document.addEventListener('mousedown', ()=>{
 document.addEventListener('mouseup', ()=>{
 	catImg.setAttribute('src', 'images/cat.png');
 });
-</script>
 
+document.addEventListener('touchstart', ()=>{
+	catImg.setAttribute('src', 'images/cat_active.png');
+});
+
+document.addEventListener('touchend', ()=>{
+	catImg.setAttribute('src', 'images/cat.png');
+});
+
+</script>
+	
 </body>
 </html>
