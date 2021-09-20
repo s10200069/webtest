@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>catpop</title>
+<style>
+	figure {
+		text-align:center;
+	}
+	
+	h3 {
+		text-align: center;
+		font-size: 5rem;
+	}
+</style>
+</head>
+<body>
+<h3>0</h3>
+<figure>
+	<img src="images/cat.png"/>
+</figure>
+
+<script>
+let catImg = document.querySelector('figure > img');
+var h3 = document.querySelector('h3');
+let count = h3.innerText;
+
+document.addEventListener('mousedown', ()=>{
+	count++;
+	h3.innerText=count;
+	catImg.setAttribute('src', 'images/cat_active.png');
+});
+
+document.addEventListener('mouseup', ()=>{
+	catImg.setAttribute('src', 'images/cat.png');
+});
+</script>
+
+</body>
+</html>
