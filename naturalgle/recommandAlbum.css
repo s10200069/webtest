@@ -1,0 +1,239 @@
+@charset "UTF-8";
+
+/*主要內容*/
+body,td,th{
+font-family:Arial, Helvetica, sans-serif;
+font-size:12px;
+color:#ffffff;
+}
+
+/*上方選單列*/
+#musicmenubar {
+	width:960px;
+	padding:5px 0 0 0;
+}
+
+/*搜尋bar*/
+#musicsearch {
+	padding:5px 0 0 0;
+}
+#musicsearch .titletext{
+	font-size:12px;
+	line-height:26px;
+	letter-spacing:1px;
+	color:#006699;
+	font-weight:bold;
+}
+#searchplusic {
+	width:14px;
+	padding:5px 2px 0 0;
+	float:left;
+}
+.musictableline {
+	border-left:solid;
+	border-left-color:#cbe48c;
+	border-left-width:1px;
+	border-right:solid;
+	border-right-color:#cbe48c;
+	border-right-width:1px;
+}
+
+/*內容區*/
+
+.mainbg {
+	background-image: url(../images/part2/mainbg.gif);
+	background-repeat: repeat-x;
+	background-position: bottom;
+}
+#music_left{
+	width:192px;
+	padding:5px 0 0 0;
+	background-color:#ffffff;
+}
+
+#music_left .moremvline{
+	background-color:#c0c18d;
+	border-bottom:solid;
+	border-bottom-color:#6a6b3c;
+	border-bottom-width:1px;
+}
+#music_left .dlsongimg{
+	border: 1px solid #c0c18d;
+	background-color:#FFFFFF;
+	padding: 2px;
+}
+
+#recommandAlbum {
+	padding:5px 0 0 3px;
+}
+
+#recommandAlbum .bottomline{
+	background:#dcc8f3;
+	border-bottom:solid 1px #bb9be0;
+	height:25px;
+}
+
+
+#recommandAlbumCon {
+	padding:10px 3px 10px 3px;
+}
+#recommandAlbumCon .imgBorder{
+	border:1px solid #666666;
+	padding: 7px;
+	background-color:#FFFFFF;
+}
+#recommandAlbumCon .titletext{
+	font-size:12px;
+	color:#ffffff;
+	font-weight:bold;
+}
+#recommandAlbumCon .text01{
+	padding:20px 0 0 10px;
+}
+
+
+#albumSong .titletext{
+	font-size:12px;
+	color:#ffffff;
+	background-color:#d98fff;
+	padding:5px 0 5px 0;
+	text-align:center;
+}
+#albumSong .tbline{
+	border-left:solid 1px #d98fff;
+	border-right:solid 1px #d98fff;
+}
+#albumSong .charttext{
+	font-size:14px;
+	font-weight:bold;
+	color:#7f40cd;
+	text-align:center;
+}
+
+.chooseTitle{
+	font-size:16px;
+	font-weight:bold;
+	color:#0076b3;
+}
+.chooselistTitle{
+	background-color:#e4f7ff;
+	line-height:24px;
+}
+
+.recommandTitle{
+	font-size:16px;
+	font-weight:bold;
+	color:#006600;
+}
+
+
+
+
+#newsleft .bottomline{
+	background:#ebd7be;
+	border-bottom:solid 1px #a89165;
+}
+
+
+
+/*字*/
+.text_blue{color:#005480;}
+.text_blue2{color:#2FA8D2;}
+.text_pur{color:#996B94;}
+.text_gray{color:#818181;}
+.text_org{color:#FF9600;}
+.text_bar_white{
+	color:#FFFFFF;
+	font-size:11px;
+}
+.text_bar_gray{color:#7B7B7B;font-size:10px;}
+.text_bar_green{color:#4B8978;font-size:10px;}
+.text_black{color:#000000;font-size:10px;}
+.text_black2{color:#333333;}
+.text_red{color:#C31111;}
+.text_red15b{color:#D01F0D;font-size:15px;font-weight:bold;}
+.text_bline {FONT-SIZE: 10pt; COLOR: #0276c0; LINE-HEIGHT: 120%}
+.text_r1 {FONT-SIZE: 9pt; COLOR: #CC3333; LINE-HEIGHT: 120%}
+.text_gray2 {margin:0px;padding:0px 5px 0px 5px;color:#525252;}
+
+/*數字*/
+.num_pur{color:#9C4091;font-size:17px;font-weight:bold;}
+.num_pur2{color:#9C4091;font-size:15px;font-weight:bold;}
+.num_blue{color:#0076C1;font-size:15px;font-weight:bold;}
+.num_pink{color:#D80239;font-size:15px;font-weight:bold;}
+.num_gray{color:#1A1A1A;font-size:13px;font-weight:bold;}
+.num_yellow{color:#7A7D1A;font-size:13px;font-weight:bold;}
+.num_green{color:#139370;font-size:13px;font-weight:bold;}
+.num_green2{color:#139370;font-size:15px;font-weight:bold;}
+
+/*連結*/
+a{color : #525252;text-decoration: none}
+a:visited{color : #525252}
+a:active {color : #0000CC;text-decoration: underline}
+a:hover {
+	color : #0099FF;
+	text-decoration: underline
+}
+
+.link_pur a:link    {color:#996B94; text-decoration: none} 
+.link_pur a:visited {color:#996B94; text-decoration: none} 
+.link_pur a:hover   {
+	color:#0099FF;
+	text-decoration: underline
+}
+
+.link_gray a:link    {color:#818181; text-decoration: none} 
+.link_gray a:visited {color:#818181; text-decoration: none} 
+.link_gray a:hover   {
+	color:#0099FF;
+	text-decoration: underline
+}
+
+.link_blue a:link    {color:#4383A4; text-decoration: none} 
+.link_blue a:visited {color:#4383A4; text-decoration: none} 
+.link_blue a:hover   {
+	color:#0099FF;
+	text-decoration: underline
+}
+
+.link_brown a:link    {color:#8C784F; text-decoration: none} 
+.link_brown a:visited {color:#8C784F; text-decoration: none} 
+.link_brown a:hover   {
+	color:#0099FF;
+	text-decoration: underline
+}
+
+.link_yellow a:link    {color:#898D14; text-decoration: none} 
+.link_yellow a:visited {color:#898D14; text-decoration: none} 
+.link_yellow a:hover   {
+	color:#0099FF;
+	text-decoration: underline
+}
+
+.link_org a:link    {color:#F7860E; text-decoration: none} 
+.link_org a:visited {color:#F7860E; text-decoration: none} 
+.link_org a:hover   {
+	color:#0099FF;
+	text-decoration: underline
+}
+
+.link_org2 a:link    {color:#FF6600; text-decoration: underline} 
+.link_org2 a:visited {color:#FF6600; text-decoration: underline} 
+.link_org2 a:hover   {
+	color:#0099FF;
+	text-decoration: none
+}
+
+.link_green a:link    {color:#139370; text-decoration: none} 
+.link_green a:visited {color:#139370; text-decoration: none} 
+.link_green a:hover   {
+	color:#0099FF;
+	text-decoration: underline
+}
+
+.link_green2 a:link    {color:#139370; text-decoration: underline} 
+.link_green2 a:visited {color:#139370; text-decoration: underline} 
+.link_green2 a:hover   {
+	color:#0099FF;
+	text-decoration: none
+}

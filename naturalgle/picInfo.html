@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>catpop</title>
+<title>風景介紹</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimun-scale=1"> 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="recommandAlbum.css"/>
 
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+
 <style>
 	html {
 		height: 100vh;
@@ -18,12 +21,10 @@
 		align-items: center;
 		display: flex;
 		flex-direction: column;
-		<!-- height: calc(100vh - 56px); -->
 		min-width: fit-content;
 		padding-top: 56px;
 		position: relative;
 		z-index: 1;
-		
 	}
 	
 	.logo {
@@ -85,73 +86,127 @@
 	}
 	
 	.swiper {
-        width: 100%;
-        padding-top: 50px;
-        <!-- padding-bottom: 50px; -->
-      }
+		width: 100%;
+		padding-top: 50px;
+	}
 
-      .swiper-slide {
-        background-position: center;
-        background-size: cover;
-        width: 300px;
-        height: 300px;
-      }
+	.swiper-slide {
+		background-position: center;
+		background-size: cover;
+		width: 200px;
+	}
 
-      .swiper-slide img {
-        display: block;
-        width: 100%;
-      }
+	.swiper-slide img {
+		display: block;
+		width: 100%;
+		height:200px;
+	}
+	  
+	.container {
+		margin:auto;
+		max-width:768px;
+	}
+	  
+	.goHome {
+		text-align:center;
+		margin-top: 10%;
+	}
+	  
+	.goHome a {
+		font-size: 3vw;
+		color: blue;
+	}      
 </style>
 </head>
 
 <body>
- <div class="swiper mySwiper">
-  <div class="swiper-wrapper">
-  </div>
+
+<div class="container">
+	<div id="recommandAlbumCon">
+		<table width="98%" border="0" cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr>
+					<td width="28%"><div class="imgBorder">
+							<img
+								src=""
+								width="192" height="192">
+						</div></td>
+					<td width="72%" class="text01"><table width="96%" border="0"
+							cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<td width="16%" class="titletext">風景名稱：</td>
+									<td width="84%"></td>
+								</tr>	
+								<tr>
+									<td> 拍攝心得：</td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="swiper mySwiper">
+	<div class="swiper-wrapper">
+	</div>
+</div>
+
+<div class="goHome">
+	<a href="https://s10200069.github.io/webtest/naturalgle/search.html">
+		回首頁
+	</a>
 </div>
 
 <script>
-// 	window.addEventListener('pageshow', function (event) {
-//            if(event.persisted || window.performance && window.performance.navigation.type == 2){
-//                location.href="https://s10200069.github.io/webtest/naturalgle/search.html";
-//            }
-//    	 });
-	
+	<!-- window.addEventListener('pageshow', function (event) { -->
+           <!-- if(event.persisted || window.performance && window.performance.navigation.type == 2){ -->
+               <!-- location.href="https://s10200069.github.io/webtest/naturalgle/search.html"; -->
+           <!-- } -->
+    <!-- }); -->
+
 	let id = new URLSearchParams(window.location.search).get("id");
 	let swiper_wrapper = $('.swiper-wrapper');
 
-	const jsonStr = '[{"id":"1","picPath":"https://swiperjs.com/demos/images/nature-1.jpg"},' + 
-	'{"id":"2","picPath":"https://swiperjs.com/demos/images/nature-2.jpg"},' + 
-	'{"id":"3","picPath":"https://swiperjs.com/demos/images/nature-3.jpg"},' +
-	'{"id":"4","picPath":"https://swiperjs.com/demos/images/nature-4.jpg"},' +
-	'{"id":"5","picPath":"https://swiperjs.com/demos/images/nature-5.jpg"}]';
+	const jsonStr = '[{"id":"S__44736520","picPath":"S__44736520.jpg","name":"陽光沙灘","picInfo":"一望無際的大海上，享受的陽光的曝曬，遠離城市間的喧囂，能夠忘卻所有的煩惱。"},' + 
+	'{"id":"S__44736522","picPath":"S__44736522.jpg","name":"釣魚好手","picInfo":"石岸邊上釣魚的大叔，莫非是釣魚的高手? 看見他一竿一隻魚，就知道他是老江湖了。"},' + 
+	'{"id":"S__44736523","picPath":"S__44736523.jpg","name":"幽遂步道","picInfo":"周圍一片昏暗，人煙罕至，唯獨只有一盞燈光指引我向前走，周圍散發陰森的氣息。"},' +
+	'{"id":"S__44736524","picPath":"S__44736524.jpg","name":"公園的船錨","picInfo":"這個社區的人們把當年戰船上的零件擺放在公園中，除了這支船錨，周圍還有船槳、大砲。"},' +
+	'{"id":"S__44736525","picPath":"S__44736525.jpg","name":"摩西分海","picInfo":"相信大家都有聽過摩西分海的故事，主角揮舞著杖，大海就一分為二，而現實中真的存在這種地方，當下看到時很震撼，旺季時能看到許多觀光客走在上面，不過工作成員吹哨時要趕快回來，不然漲潮時就回不來囉!"}]';
 
 	$.each(JSON.parse(jsonStr),(idx, result) => {
 		if (id != result.id) {
-			let html = '<a href="https://s10200069.github.io/webtest/naturalgle/picInfo.html?id=' + result.id + '" class="swiper-slide">';
+			let html = '<a href="picInfo.html?id=' + result.id + '" class="swiper-slide">';  //https://s10200069.github.io/webtest/naturalgle/picInfo.html?id=
 			html += '<img src="' + result.picPath + '" />';
 			html += '</a>';
 			swiper_wrapper.append(html);
+		} else {
+			$('#recommandAlbumCon > table > tbody > tr > td:nth-child(1) > div > img').attr('src', result.picPath);
+			$('#recommandAlbumCon > table > tbody > tr > td.text01 > table > tbody > tr:nth-child(1) > td:nth-child(2)').text(result.name);
+			$('#recommandAlbumCon > table > tbody > tr > td.text01 > table > tbody > tr:nth-child(2) > td:nth-child(2)').text(result.picInfo);
 		}
 	});
 
-	 var swiper = new Swiper(".mySwiper", {
-        effect: "coverflow",
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: "auto",
+	var swiper = new Swiper(".mySwiper", {
+		effect: "coverflow",
+		grabCursor: true,
+		centeredSlides: true,
+		slidesPerView: "auto",
 		initialSlide:Math.floor(JSON.parse(jsonStr).length/2),
-        coverflowEffect: {
-          rotate: 0,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: true,
-        },
-        pagination: {
-          el: ".swiper-pagination",
-        },
-      });
+		coverflowEffect: {
+			rotate: 0,
+			stretch: 0,
+			depth: 100,
+			modifier: 1,
+			slideShadows: true,
+		},
+		pagination: {
+			el: ".swiper-pagination",
+		},
+	});
 </script>
 </body>
 </html>

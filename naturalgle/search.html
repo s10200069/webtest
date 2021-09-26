@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>catpop</title>
+<title>NTL搜尋引擎</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimun-scale=1"> 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
@@ -18,7 +18,6 @@
 		align-items: center;
 		display: flex;
 		flex-direction: column;
-		<!-- height: calc(100vh - 56px); -->
 		min-width: fit-content;
 		padding-top: 56px;
 		position: relative;
@@ -85,22 +84,21 @@
 	}
 	
 	.swiper {
-        width: 100%;
-        padding-top: 50px;
-        <!-- padding-bottom: 50px; -->
-      }
+		width: 100%;
+		padding-top: 50px;
+    }
 
-      .swiper-slide {
-        background-position: center;
-        background-size: cover;
-        width: 300px;
-        height: 300px;
-      }
+	.swiper-slide {
+		background-position: center;
+		background-size: cover;
+		width: 200px;
+	}
 
-      .swiper-slide img {
-        display: block;
-        width: 100%;
-      }
+	.swiper-slide img {
+		display: block;
+		width: 100%;
+		height: 200px;
+	}
 </style>
 </head>
 
@@ -125,11 +123,11 @@
 <script>
 	let swiper_wrapper = $('.swiper-wrapper');
 
-	const jsonStr = '[{"id":"1","picPath":"https://swiperjs.com/demos/images/nature-1.jpg"},' + 
-	'{"id":"2","picPath":"https://swiperjs.com/demos/images/nature-2.jpg"},' + 
-	'{"id":"3","picPath":"https://swiperjs.com/demos/images/nature-3.jpg"},' +
-	'{"id":"4","picPath":"https://swiperjs.com/demos/images/nature-4.jpg"},' +
-	'{"id":"5","picPath":"https://swiperjs.com/demos/images/nature-5.jpg"}]';
+	const jsonStr = '[{"id":"S__44736520","picPath":"S__44736520.jpg","name":"陽光沙灘","picInfo":"一望無際的大海上，享受的陽光的曝曬，遠離城市間的喧囂，能夠忘卻所有的煩惱。"},' + 
+	'{"id":"S__44736522","picPath":"S__44736522.jpg","name":"釣魚好手","picInfo":"石岸邊上釣魚的大叔，莫非是釣魚的高手? 看見他一竿一隻魚，就知道他是老江湖了。"},' + 
+	'{"id":"S__44736523","picPath":"S__44736523.jpg","name":"幽遂步道","picInfo":"周圍一片昏暗，人煙罕至，唯獨只有一盞燈光指引我向前走，周圍散發陰森的氣息。"},' +
+	'{"id":"S__44736524","picPath":"S__44736524.jpg","name":"公園的船錨","picInfo":"這個社區的人們把當年戰船上的零件擺放在公園中，除了這支船錨，周圍還有船槳、大砲。"},' +
+	'{"id":"S__44736525","picPath":"S__44736525.jpg","name":"摩西分海","picInfo":"相信大家都有聽過摩西分海的故事，主角揮舞著杖，大海就一分為二，而現實中真的存在這種地方，當下看到時很震撼，旺季時能看到許多觀光客走在上面，不過工作成員吹哨時要趕快回來，不然漲潮時就回不來囉!"}]';
 
 	$.each(JSON.parse(jsonStr),(idx, result) => {
 		let html = '<a href="https://s10200069.github.io/webtest/naturalgle/picInfo.html?id=' + result.id + '" class="swiper-slide">';
@@ -180,7 +178,6 @@
           el: ".swiper-pagination",
         },
       });
-	
 </script>
 </body>
 </html>
