@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>catpop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimun-scale=1"> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<style>
+	html {
+		height: 100vh;
+	    background: linear-gradient(#e66465, #9198e5);
+	}
+
+	.content {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		<!-- height: calc(100vh - 56px); -->
+		min-width: fit-content;
+		padding-top: 56px;
+		position: relative;
+		z-index: 1;
+		
+	}
+	
+	.logo {
+		display: flex;
+		flex-direction: column;
+		flex-shrink: 0;
+		justify-content: flex-end;
+		min-height: 200px;
+		margin-bottom: 38px;
+		z-index: 1;
+	}
+	
+	.inputWrapper {
+		height: 100%;
+		position: relative;
+
+		border-radius: calc(0.5 * 44px);
+		box-shadow: 0 1px 6px 0 rgb(32 33 36 / 28%);
+		font-size: 16px;
+		height: 44px;
+	}
+	
+	.inputWrapper input{
+		border: none;
+		border-radius: calc(0.5 * 44px);
+		font-family: inherit;
+		font-size: inherit;
+		height: 100%;
+		outline: none;
+		padding-inline-end: 44px;
+		padding-inline-start: 17px;
+		position: relative;
+		width: 100%;
+	}
+	
+	input[type="search"]::-webkit-search-cancel-button {
+		-webkit-appearance: none;
+	}
+	
+	#btn-search {
+		height: 100%;
+		width: 46px;
+		border-radius: 12px;
+		position: absolute;
+		right: 0;
+		cursor:pointer;
+	}
+	
+	@media (max-width: 767px) {
+		.inputWrapper {
+			width:80%;
+		}
+	}
+	
+	@media (min-width: 768px) {
+		.inputWrapper {
+			width:561px;
+		}
+	}
+	
+	.swiper {
+        width: 100%;
+        padding-top: 50px;
+        <!-- padding-bottom: 50px; -->
+      }
+
+      .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 300px;
+        height: 300px;
+      }
+
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+      }
+</style>
+</head>
+
+<body>
+ <div class="swiper mySwiper">
+  <div class="swiper-wrapper">
+  </div>
+</div>
+
+<script>
+	let id = new URLSearchParams(window.location.search).get("id");
+	let swiper_wrapper = $('.swiper-wrapper');
+
+	const jsonStr = '[{"id":"1","picPath":"https://swiperjs.com/demos/images/nature-1.jpg"},' + 
+	'{"id":"2","picPath":"https://swiperjs.com/demos/images/nature-2.jpg"},' + 
+	'{"id":"3","picPath":"https://swiperjs.com/demos/images/nature-3.jpg"},' +
+	'{"id":"4","picPath":"https://swiperjs.com/demos/images/nature-4.jpg"},' +
+	'{"id":"5","picPath":"https://swiperjs.com/demos/images/nature-5.jpg"}]';
+
+	$.each(JSON.parse(jsonStr),(idx, result) => {
+		if (id != result.id) {
+			let html = '<a href="https://s10200069.github.io/webtest/naturalgle/picInfo.html?id=' + result.id + '" class="swiper-slide">';
+			html += '<img src="' + result.picPath + '" />';
+			html += '</a>';
+			swiper_wrapper.append(html);
+		}
+	});
+
+	 var swiper = new Swiper(".mySwiper", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+		initialSlide:Math.floor(JSON.parse(jsonStr).length/2),
+        coverflowEffect: {
+          rotate: 0,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+        },
+      });
+</script>
+</body>
+</html>
