@@ -395,7 +395,7 @@
 	
 	function play(isPlay,errorMsg) {
 		if (isPlay) {
-			$(window).scrolltop("0");
+			window.document.documentElement.scrollTop = 0;
 			$('body').append('<h1 id="loading">資料讀取中...</h1>');
 			setTimeout(function(){
 				$('#loading').hide();
