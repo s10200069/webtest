@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" >
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>NaturaltelGift</title>
+	<!-- jQuery v1.9.1 -->
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<!-- Animate.css v3.5.2 -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+	<!-- lettering.js v0.7.0 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lettering.js/0.7.0/jquery.lettering.min.js"></script>
+	<!-- Textillate.js v0.4.0 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/textillate/0.4.0/jquery.textillate.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.5/sweetalert2.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.5/sweetalert2.min.css" rel="stylesheet">
+
+	<style>
+		html {
+			background: linear-gradient(white 1%, lightpink 99%);			
+		}	
+		
+		body,html{
+		  width: 100%;
+		  height: 100vh;
+		  margin: 0;	
+		}
+		
+		#canvas{
+		  display:none;
+		  height: 100%;
+		  width: 100%;
+		  background-color: black;
+		}
+		
+		.example, #loading, #newyearStr {
+			width: 100%;
+			text-align: center;
+			font-size: 5vh;
+			font-family: DFKai-sb;
+			margin: 0;
+    		padding: 5% 0;
+		}
+		
+		#loading {
+			position: absolute;
+    			top: 0;	
+		}	
+		
+		#newyearStr {
+			color: white; 
+			background: black;
+			margin: 0 0 -1px 0;
+		}
+		
+		#ascii-art {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 2vh;
+			display:none;
+		}
+	</style>
+</head>
+<body>
+	<h1 class="example">
+		<ul class="texts">
+		</ul>
+	</h1>
+	<pre id="ascii-art">
+?̮̑●̮̑?★⋰⋱☆⋰⋱★⋰⋱☆⋰⋱★⋰⋱☆⋰⋱★?̮̑●̮̑?
+  ──────█─█ █▀█ █▀█ █▀█ █─█─────
+  ──────█▀█ █▀█ █▀▀ █▀▀ ▀█▀─────
+  ──────▀─▀ ▀─▀ ▀── ▀── ─▀──────
+  █▄─█ █▀▀ █─█─█──█─█ █▀▀ █▀█ █▀█
+  █─██ █▀▀ █─█─█──▀█▀ █▀▀ █▀█ ██▀
+  ▀──▀ ▀▀▀ ─▀▀▀────▀─ ▀▀▀ ▀─▀ ▀─▀
+?̮̑●̮̑?★⋰⋱☆⋰⋱★⋰⋱☆⋰⋱★⋰⋱☆⋰⋱★?̮̑●̮̑?
+	</pre>
+	<canvas id="canvas"></canvas>
+	<script>	
+	let html = '';
+	const pwdObj = {
+		  Jerry : '\bAê',
+		  JerryLiang : 'u \x83',
+		  GreenBean : '¦¹\x82',
+		  Len : '7\x10n',
+		  Julie : 'Í\x88`',
+		  JulieHung : 'ö¡\x98',
+		  Angela : 'xNÀ',
+		  Bella : '[\x88o',
+		  Paker:'¶\x9Bç',
+		  Johnson:'>«^',
+		  Pamela:"H'E",
+		  Amber:'g¥ú',
+		  Alvin:'ÚÔ\x10',
+		  Cherry:'éfØ',
+		  Cindy:'ë\x17s',
+		  Yolanda:'\x1E÷i'
+	};
+	
+	Swal.fire({
+		text:'請選擇你在公司的英文名字:',
+		input: 'select',
+		inputOptions: {
+			'Alvin': 'Alvin',
+			'Amber': 'Amber',
+			'Angela': 'Angela',
+			'Bella': 'Bella',
+			'Cherry': 'Cherry',
+			'Cindy': 'Cindy',
+			'GreenBean': 'GreenBean',
+			'Jerry': 'Jerry',
+			'JerryLiang': 'JerryLiang',
+			'Julie': 'Julie',
+			'JulieHung': 'JulieHung',
+			'Johnson': 'Johnson',
+			'Len': 'Len',
+			'Paker': 'Paker',
+			'Pamela': 'Pamela',
+			'Yolanda': 'Yolanda',
+		},
+		inputPlaceholder: '選擇英文名',
+		showCancelButton: false,
+		allowOutsideClick: false,
+		confirmButtonText: '確定',
+	})
+	.then((name) => {
+		switch(name.value) {
+			case 'Jerry':
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.Jerry)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+					
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20Jerry%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%88%91%E8%A6%BA%E5%BE%97%E4%BD%A0%E7%9C%9F%E7%9A%84%E5%BE%88%E5%8E%B2%E5%AE%B3%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%AE%8C%E6%88%90%E4%BA%86%E9%80%99%E9%A0%85%E4%BA%86%E4%B8%8D%E8%B5%B7%E7%9A%84%E5%B0%88%E6%A1%88%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E8%BF%91%E4%BD%A0%E5%BF%83%E6%83%85%E4%B8%8D%E5%A4%AA%E5%A5%BD%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E8%A9%A6%E8%91%97%E5%81%9A%E8%87%AA%E5%B7%B1%E5%96%9C%E6%AD%A1%E7%9A%84%E4%BA%8B%E6%83%85%EF%BC%8C%E5%BF%98%E6%8E%89%E4%B8%80%E5%88%87%E7%85%A9%E6%83%B1%E5%90%A7%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E6%96%B0%E5%B9%B4%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E4%BD%A0%3C%2Fli%3E');
+					
+					play(true);
+				});
+				break;
+			case 'JerryLiang':
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.JerryLiang)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+					
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20JerryLiang%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E8%BA%AB%E7%82%BA%E5%85%AC%E5%8F%B8%E7%9A%84%E8%BA%AB%E9%AB%98%E6%93%94%E7%95%B6%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%83%B3%E5%BF%85%E5%A4%A9%E5%A1%8C%E4%B8%8B%E4%BE%86%E6%99%82%E4%BD%A0%E6%9C%83%E4%BF%9D%E8%AD%B7%E6%88%91%E5%80%91%E5%A4%A7%E5%AE%B6%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%96%94%EF%BC%8C%E5%B0%8D%E4%BA%86%20%E4%BD%A0%E4%B9%9F%E6%98%AF%E4%B8%80%E4%BD%8D%E5%A5%BD%E9%85%92%E5%8F%8B%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%E5%86%8D%E4%BE%86%E7%B9%BC%E7%BA%8C%E5%96%9D%E9%85%92%E5%90%A7(%E7%AC%91%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E6%96%B0%E5%B9%B4%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E4%BD%A0%3C%2Fli%3E');
+					
+					play(true);
+				});
+				break;
+			case 'GreenBean':
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.GreenBean)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+					
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20GreenBean%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%84%9F%E8%AC%9D%E6%82%A8%E6%99%82%E5%B8%B8%E6%8F%90%E4%BE%9B%E6%8A%80%E8%A1%93%E4%B8%8A%E7%9A%84%E6%8C%87%E5%B0%8E%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%88%91%E5%80%91%E9%80%99%E4%BA%9B%E5%B7%A5%E7%A8%8B%E5%B8%AB%E5%B0%8F%E6%9C%8B%E5%8F%8B%E7%B8%BD%E6%98%AF%E5%95%8F%E9%A1%8C%E4%B8%80%E5%A0%86(%E7%AC%91%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E4%BD%86%E4%BD%A0%E9%83%BD%E5%BE%88%E6%9C%89%E8%80%90%E5%BF%83%E7%9A%84%E5%BC%95%E5%B0%8E%E6%88%91%E5%80%91%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%E5%86%8D%E4%BE%86%E4%B8%80%E8%B5%B7%E7%B9%BC%E7%BA%8C%E5%8A%AA%E5%8A%9B%E5%90%A7%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E6%96%B0%E5%B9%B4%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E4%BD%A0%3C%2Fli%3E');
+					
+					play(true);
+				});
+				break;	
+			case 'Len':
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.Len)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+					
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20Len%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%84%9F%E8%AC%9D%E6%82%A8%E6%99%82%E5%B8%B8%E6%8F%90%E4%BE%9B%E6%8A%80%E8%A1%93%E4%B8%8A%E7%9A%84%E6%8C%87%E5%B0%8E%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%82%A8%E6%8F%90%E4%BE%9B%E7%9A%84%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%A1%88%E9%83%BD%E5%BE%88%E5%AF%A6%E7%94%A8%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%E5%86%8D%E4%BE%86%E4%B8%80%E8%B5%B7%E7%B9%BC%E7%BA%8C%E5%8A%AA%E5%8A%9B%E5%90%A7%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E6%96%B0%E5%B9%B4%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E4%BD%A0%3C%2Fli%3E');
+					
+					play(true);
+				});
+				break;	
+			case 'Julie': 
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.Julie)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+					
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20Julie%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%84%9F%E8%AC%9D%E6%82%A8%E6%99%82%E5%B8%B8%E6%8F%90%E4%BE%9B%E6%8A%80%E8%A1%93%E4%B8%8A%E7%9A%84%E6%8C%87%E5%B0%8E%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%88%91%E7%9F%A5%E9%81%93%E6%88%91%E5%BE%88%E6%84%9B%E9%A0%82%E5%98%B4%EF%BC%8C%E5%8F%88%E5%BE%88%E4%B8%8D%E6%88%90%E7%86%9F%EF%BC%8C%E5%8F%88%E4%B8%8D%E5%96%84%E8%A8%80%E8%BE%AD%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%B8%B8%E5%B8%B8%E8%B7%9F%E5%A6%B3%E5%BF%AB%E5%90%B5%E8%B5%B7%E4%BE%86%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E4%BD%86%E5%A6%B3%E6%95%99%E6%88%91%E7%9A%84%E6%88%91%E9%83%BD%E6%9C%89%E9%8A%98%E8%A8%98%E5%9C%A8%E5%BF%83%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%E8%AE%93%E6%88%91%E7%B9%BC%E7%BA%8C%E6%88%90%E7%82%BA%E5%A6%B3%E7%9A%84%E5%BE%97%E6%84%8F%E9%96%80%E7%94%9F%E5%90%A7(%E7%AC%91%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E6%96%B0%E5%B9%B4%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E5%A6%B3%3C%2Fli%3E');
+					
+					play(true);
+				});
+				break;	
+			case 'JulieHung': 
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.JulieHung)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+					
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20JulieHung%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%88%91%E6%87%89%E8%A9%B2%E6%98%AF%E8%B7%9F%E5%A6%B3%E5%90%88%E4%BD%9C%E6%9C%80%E5%A4%9A%E5%80%8B%E5%B7%A5%E7%A8%8B%E5%B8%AB%E4%BA%86(%E7%AC%91%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E8%B7%9F%E5%A6%B3%E8%A8%8E%E8%AB%96%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6%E7%9A%84%E6%99%82%E5%80%99%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%A6%B3%E7%B8%BD%E6%98%AF%E8%83%BD%E5%82%BE%E8%81%BD%E6%88%91%E8%AA%AA%E7%9A%84%E8%A9%B1%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E4%B8%A6%E4%B8%94%E7%B5%A6%E4%BA%88%E6%88%91%E9%96%8B%E7%99%BC%E4%B8%8A%E7%9A%84%E5%8D%94%E5%8A%A9%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%E5%86%8D%E4%BE%86%E7%B9%BC%E7%BA%8C%E5%90%88%E4%BD%9C%E5%90%A7%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E6%96%B0%E5%B9%B4%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E5%A6%B3%3C%2Fli%3E');
+					
+					play(true);
+				});
+				break;				
+			case 'Angela': 
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.Angela)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+					
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20Angela%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%84%9F%E8%A6%BA%E5%A6%B3%E6%98%AF%E5%85%AC%E5%8F%B8%E7%9A%84%E6%B0%A3%E6%B0%9B%E6%93%94%E7%95%B6%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%89%E5%A6%B3%E5%9C%A8%E7%9A%84%E5%9C%B0%E6%96%B9%E5%B0%B1%E6%9C%83%E6%9C%89%E6%AD%A1%E7%AC%91%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%90%8C%E6%99%82%E5%A6%B3%E4%B9%9F%E6%98%AF%E5%80%8B%E4%BC%81%E5%8A%83%E7%A5%9E%E7%AB%A5%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%BE%88%E5%A4%9A%E6%83%B3%E6%B3%95%E9%83%BD%E5%BE%88%E6%9C%89%E6%84%8F%E6%80%9D%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%E5%86%8D%E4%BE%86%E7%B9%BC%E7%BA%8C%E9%81%94%E6%A8%99%E5%90%A7%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E6%96%B0%E5%B9%B4%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E5%A6%B3%3C%2Fli%3E');
+					
+					play(true);
+				});
+				break;	
+			case 'Bella': 
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.Bella)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+					
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20Bella%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%B0%8D%E5%A6%B3%E7%9A%84%E7%AC%AC%E4%B8%80%E5%8D%B0%E8%B1%A1%E5%B0%B1%E6%98%AF%E4%B8%80%E4%BD%8D%E5%BC%B7%E5%8B%A2%E5%A5%B3%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E4%BD%86%E7%9B%B8%E8%99%95%E4%B9%8B%E5%BE%8C%E7%99%BC%E7%8F%BE%E5%85%B6%E5%AF%A6%E5%A6%B3%E5%BE%88%E6%BA%AB%E6%9F%94%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%8F%88%E5%BE%88%E3%84%8E%E4%B8%80%E3%84%A4%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%E8%A6%81%E7%B9%BC%E7%BA%8C%E3%84%8E%E4%B8%80%E3%84%A4%E4%B8%8B%E5%8E%BB%E5%96%94(%E7%AC%91%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E6%96%B0%E5%B9%B4%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E5%A6%B3%3C%2Fli%3E');
+					
+					play(true);
+				});
+				break;		
+			case 'Paker': 
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.Paker)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+					
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20Paker%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E4%BD%A0%E6%87%89%E8%A9%B2%E5%BE%88%E6%84%8F%E5%A4%96%E6%88%91%E5%9C%A8%E6%90%9E%E9%80%99%E5%80%8B(%E7%AC%91%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%88%91%E8%A6%BA%E5%BE%97%E4%BD%A0%E6%98%AF%E4%B8%80%E4%BD%8D%E4%B8%8A%E6%89%8B%E5%BE%88%E5%BF%AB%EF%BC%8C%E5%8F%88%E5%BE%88%E5%BC%B7%E7%9A%84%E5%B7%A5%E7%A8%8B%E5%B8%AB%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%90%8C%E6%99%82%E5%8F%88%E5%BE%88%E5%B9%BD%E9%BB%98(%E7%AC%91%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%E6%88%91%E5%80%91%E7%B9%BC%E7%BA%8C%E5%8A%AA%E5%8A%9B%E5%90%A7%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E6%96%B0%E5%B9%B4%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E4%BD%A0%3C%2Fli%3E');
+					
+					play(true);
+				});
+				break;	
+			case 'Johnson': 
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.Johnson)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+					
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20Johnson%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%93%88%E5%93%88%20%E6%B2%92%E6%83%B3%E5%88%B0%E6%88%91%E6%9C%83%E5%81%9A%E9%80%99%E5%80%8B%E5%90%A7%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%88%91%E8%A6%BA%E5%BE%97%E4%BD%A0%E6%98%AF%E4%B8%80%E4%BD%8D%E5%BE%88%E6%9C%89%E6%BD%9B%E5%8A%9B%E7%9A%84%E5%B7%A5%E7%A8%8B%E5%B8%AB%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E4%BD%A0%E7%9A%84%E5%AD%B8%E7%BF%92%E6%85%8B%E5%BA%A6%E8%AE%93%E6%88%91%E5%BE%88%E6%95%AC%E4%BD%A9%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%E5%86%8D%E4%BE%86%E4%B8%80%E5%90%8C%E5%8A%AA%E5%8A%9B%E5%90%A7%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E6%96%B0%E5%B9%B4%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E4%BD%A0%3C%2Fli%3E');
+					
+					play(true);
+				});
+				break;	
+			case 'Pamela': 
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.Pamela)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+					
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20Pamela%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%B0%8D%E5%A6%B3%E7%9A%84%E5%8D%B0%E8%B1%A1%E5%B0%B1%E6%98%AF%E7%BE%8E%E9%A3%9F%E5%B0%8F%E9%9A%8A%E9%95%B7%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E8%B2%B7%E5%8D%88%E9%A4%90%E6%89%BE%E5%A6%B3%E5%B0%B1%E5%B0%8D%E4%BA%86XD%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%B0%8D%E4%BA%86%EF%BC%8C%E5%A6%B3%E9%80%81%E6%88%91%E7%9A%84%E7%A6%AE%E7%89%A9%E5%BE%88%E5%8F%AF%E6%84%9B%EF%BC%8C%E6%88%91%E6%9C%89%E6%99%82%E5%80%99%E6%9C%83%E6%91%B8%E6%91%B8%E7%89%A0%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%E9%82%84%E8%AB%8B%E5%A4%9A%E5%A4%9A%E6%8C%87%E6%95%99%E5%93%A6%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E5%A6%B3%3C%2Fli%3E');		
+					
+					play(true);
+				});
+				break;	
+			case 'Amber': 
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.Amber)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+					
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20Amber%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%B0%8D%E5%A6%B3%E7%9A%84%E5%8D%B0%E8%B1%A1%E5%B0%B1%E6%98%AF%E5%BE%88%E6%9C%83%E7%85%A7%E9%A1%A7%E4%BA%BA%E7%9A%84%E5%A4%A7%E5%A7%8A%E5%BD%A2%E8%B1%A1%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%E7%A5%9D%E5%A6%B3%E4%BA%8B%E6%A5%AD%E9%A0%86%E5%88%A9%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E5%A6%B3%3C%2Fli%3E');		
+					
+					play(true);
+				});
+				break;	
+			case 'Alvin': 
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.Alvin)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+					
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20Alvin%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%E7%A5%9D%E4%BD%A0%E4%BA%8B%E6%A5%AD%E9%A0%86%E5%88%A9%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%AF%AB%E7%A8%8B%E5%BC%8F%E6%B0%B8%E7%84%A1bug%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E4%BD%A0%3C%2Fli%3E');		
+					
+					play(true);
+				});
+				break;	
+			case 'Cherry': 
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.Cherry)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+					
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20Cherry%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%9C%A8%E5%85%AC%E5%8F%B8%E5%A6%B3%E7%B5%A6%E4%BA%BA%E5%BE%88%E6%9C%83%E7%85%A7%E9%A1%A7%E4%BA%BA%E7%9A%84%E6%84%9F%E8%A6%BA%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E7%B8%BD%E6%98%AF%E7%85%A7%E9%A1%A7%E6%88%91%E5%80%91%E9%80%99%E4%BA%9B%E5%BC%9F%E5%BC%9F%E5%A6%B9%E5%A6%B9(%E7%AC%91%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%B0%BE%E7%89%99%E7%9A%84%E6%99%82%E5%80%99%E7%99%BC%E7%8F%BE%E5%A6%B3%E7%9A%84%E5%B9%B4%E8%B3%87%E5%BE%88%E5%8E%B2%E5%AE%B3%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E4%BD%86%E5%A6%B3%E6%98%AF%E9%A0%AD%E4%B8%80%E6%AC%A1%E6%94%B6%E5%88%B0%E9%80%99%E7%A8%AE%E7%A6%AE%E7%89%A9%E5%B0%8D%E5%90%A7(%E7%AC%91%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%E8%A6%81%E7%B9%BC%E7%BA%8C%E7%85%A7%E9%A1%A7%E6%88%91%E5%80%91%E9%80%99%E4%BA%9B%E5%95%8F%E9%A1%8C%E5%85%92%E7%AB%A5%E5%96%94(%E7%AC%91%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E6%96%B0%E5%B9%B4%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E5%A6%B3%3C%2Fli%3E');
+					
+					play(true);
+				});
+				break;	
+			case 'Cindy': 
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.Cindy)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+					
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20Cindy%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%88%91%E5%B0%8D%E5%A6%B3%E7%9A%84%E7%AC%AC%E4%B8%80%E5%8D%B0%E8%B1%A1%E5%98%9B%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%B0%B1%E6%98%AF%E9%82%A3%E7%A8%AE%E6%9C%83%E9%A8%8E%E8%85%B3%E8%B8%8F%E8%BB%8A%EF%BC%8C%E7%84%B6%E5%BE%8C%E6%89%93%E6%8B%9B%E5%91%BC%E7%9A%84%E9%99%BD%E5%85%89%E5%A5%B3%E5%AD%A9%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%BE%8C%E4%BE%86%E7%99%BC%E7%8F%BE%E5%A6%B3%E8%AC%9B%E5%B9%B9%E8%A9%B1%E7%9A%84%E8%83%BD%E5%8A%9B%E4%B9%9F%E5%BE%88%E5%8E%B2%E5%AE%B3(%E7%AC%91%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%A5%BD%E5%95%A6%EF%BC%8C%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%E5%86%8D%E4%BE%86%E7%B9%BC%E7%BA%8C%E5%90%88%E4%BD%9C%E5%90%A7%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E5%A6%B3%3C%2Fli%3E');		
+					
+					play(true);
+				});
+				break;
+			case 'Yolanda': 
+				Swal.fire({
+					text:'請輸入專屬密碼:',
+					input: 'text',
+					allowOutsideClick: false,
+					confirmButtonText: '確定',
+				})
+				.then((pwd) => {
+					if(pwd.value!==btoa(pwdObj.Yolanda)) {
+						play(false,'密碼錯誤');
+						return false;
+					}
+						
+					html = decodeURIComponent('%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3EDear%20Yolanda%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E8%B7%9F%E5%A6%B3%E5%A5%BD%E5%83%8F%E9%82%84%E6%B2%92%E5%90%88%E4%BD%9C%E9%81%8E%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E5%B0%8D%E5%A6%B3%E7%9A%84%E5%8D%B0%E8%B1%A1%E5%B0%B1%E6%98%AF%E5%BE%88%E8%AA%8D%E7%9C%9F%E5%B7%A5%E4%BD%9C%E7%9A%84PM%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%96%B0%E7%9A%84%E4%B8%80%E5%B9%B4%EF%BC%8C%E7%A5%9D%E6%82%A8%E4%BA%8B%E6%A5%AD%E9%A0%86%E5%BF%83%EF%BC%8C%E6%A5%AD%E7%B8%BE%E9%81%94%E6%A8%99%3C%2Fli%3E%3Cli%20data-in-effect%3D%22fadeIn%22%20data-out-effect%3D%22fadeOut%22%3E%E6%9C%80%E5%BE%8C%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%BB%BD%E7%A6%AE%E7%89%A9%E8%A6%81%E7%B5%A6%E5%A6%B3%3C%2Fli%3E');		
+						
+					play(true);
+				});
+				break;	
+			default:
+				play(false,'名字尚未設定');
+				break;
+		}
+	});
+	
+	function play(isPlay,errorMsg) {
+		if (isPlay) {
+			window.document.documentElement.scrollTop = 0;
+			$('body').append('<h1 id="loading">資料讀取中...</h1>');
+			$('#ascii-art').show();
+			setTimeout(function(){
+				$('#loading').hide();
+				$('.texts').append(html);
+				$( ".example" ).textillate({
+					minDisplayTime: 1250,
+					callback: function () {
+					Swal.fire({
+					  title: "確認",
+					  text: "我準備了一份禮物給你，準備好打開了嗎?",
+					  allowOutsideClick: false,
+					  icon: "success",
+					  confirmButtonText: '確定',
+					  cancelButtonText: '取消',
+					  showCancelButton:true,
+					})
+					.then((result) => {
+						if (result.isConfirmed) {
+							$('#canvas').show();
+							animate();
+							$('body').prepend('<h1 id="newyearStr">新的一年，讓我們跟著煙火一同步步高升</h1>');
+							$('.example').hide();
+							$('#ascii-art').hide();
+						} else {
+							Swal.fire({
+								text:"感謝參與!",
+								allowOutsideClick: false,
+								showConfirmButton:true,
+							})
+							.then(()=>{
+								location.reload();
+							});
+						}
+					});
+				}});
+			},2000);
+		} else {
+			Swal.fire({
+			  title: "識別錯誤",
+			  text: errorMsg,
+			  icon: "warning",
+			  dangerMode: true,
+			  allowOutsideClick: false,
+			  showConfirmButton:true,
+			  confirmButtonText: '確定',
+			}).then(()=>{
+				location.reload();
+			});
+		}
+	}
+	
+		const canvas = document.getElementById("canvas");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+var ctx = canvas.getContext("2d");
+function Firework(x,y,height,yVol,R,G,B){
+  this.x = x;
+  this.y = y;
+  this.yVol = yVol;
+  this.height = height;
+  this.R = R;
+  this.G = G;
+  this.B = B;
+  this.radius = 2;
+  this.boom = false;
+  var boomHeight = Math.floor(Math.random() * 200) + 50;
+  this.draw = function(){
+   
+   ctx.fillStyle = "rgba(" + R + "," + G + "," + B + ")";
+    ctx.strokeStyle = "rgba(" + R + "," + G + "," + B + ")";
+    ctx.beginPath();
+ //   ctx.arc(this.x,boomHeight,this.radius,Math.PI * 2,0,false);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,3,Math.PI * 2,0,false);
+    ctx.fill();
+  }
+  this.update = function(){
+    this.y -= this.yVol;
+    if(this.radius < 20){
+      this.radius += 0.35;
+    }
+    if(this.y < boomHeight){
+      this.boom = true;
+      
+      for(var i = 0; i < 120; i++){
+        particleArray.push(new Particle(
+          this.x,
+          this.y,
+          // (Math.random() * 2) + 0.5//
+          (Math.random() * 2) + 1,
+          this.R,
+          this.G,
+          this.B,
+          1,
+        ))
+
+      }
+    }
+    this.draw();
+  }
+  this.update()
+}
+
+window.addEventListener("click", (e)=>{
+    var x = e.clientX;
+  var y = canvas.height;
+  var R = Math.floor(Math.random() * 255)
+  var G = Math.floor(Math.random() * 255)
+  var B = Math.floor(Math.random() * 255)
+  var height = (Math.floor(Math.random() * 20)) + 10;
+  fireworkArray.push(new Firework(x,y,height,5,R,G,B))
+})
+
+function Particle(x,y,radius,R,G,B,A){
+  this.x = x;
+  this.y = y;
+  this.radius = radius;
+  this.R = R;
+  this.G = G;
+  this.B = B;
+  this.A = A;
+  this.timer = 0;
+  this.fade = false;
+ 
+  // Change random spread
+  this.xVol = (Math.random() * 10) - 4
+  this.yVol = (Math.random() * 10) - 4
+  
+  
+  console.log(this.xVol,this.yVol)
+  this.draw = function(){
+ //   ctx.globalCompositeOperation = "lighter"
+    ctx.fillStyle = "rgba(" + R + "," + G + "," + B + "," + this.A + ")";
+    ctx.save();
+    ctx.beginPath(); 
+   // ctx.fillStyle = "white"
+    ctx.globalCompositeOperation = "screen"
+    ctx.arc(this.x,this.y,this.radius,Math.PI * 2,0,false);
+    ctx.fill();
+   
+    ctx.restore();
+  }
+  this.update = function(){
+    this.x += this.xVol;
+    this.y += this.yVol;
+    
+    // Comment out to stop gravity. 
+    if(this.timer < 200){
+        this.yVol += 0.12;
+    }
+    this.A -= 0.02;
+    if(this.A < 0){
+      this.fade = true;
+    }
+    this.draw();
+  }
+  this.update();
+}
+
+var fireworkArray = [];
+var particleArray = [];
+for(var i = 0; i < 6; i++){
+  var x = Math.random() * canvas.width;
+  var y = canvas.height;
+  var R = Math.floor(Math.random() * 255)
+  var G = Math.floor(Math.random() * 255)
+  var B = Math.floor(Math.random() * 255)
+  var height = (Math.floor(Math.random() * 20)) + 10;
+  fireworkArray.push(new Firework(x,y,height,5,R,G,B))
+}
+
+
+function animate(){
+  requestAnimationFrame(animate);
+ // ctx.clearRect(0,0,canvas.width,canvas.height)
+  ctx.fillStyle = "rgba(0,0,0,0.1)"
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  for(var i = 0; i < fireworkArray.length; i++){
+    fireworkArray[i].update();
+  }
+  for(var j = 0; j < particleArray.length; j++){
+    particleArray[j].update();
+  }
+  if(fireworkArray.length < 4){
+      var x = Math.random() * canvas.width;
+      var y = canvas.height;
+      var height = Math.floor(Math.random() * 20);
+      var yVol = 5;
+      var R = Math.floor(Math.random() * 255);
+      var G = Math.floor(Math.random() * 255);          
+      var B = Math.floor(Math.random() * 255);
+      fireworkArray.push(new Firework(x,y,height,yVol,R,G,B));
+  }
+ 
+  
+  fireworkArray = fireworkArray.filter(obj => !obj.boom);
+  particleArray = particleArray.filter(obj => !obj.fade);
+}
+
+
+window.addEventListener("resize", (e) => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+})
+	</script>
+</body>
+</html>
